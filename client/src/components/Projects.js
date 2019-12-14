@@ -8,10 +8,12 @@ export default function Projects() {
     projects,
     setProjects,
     currentProject,
-    setCurrentProject
+    setCurrentProject,
+    initialProjectState
   } = useContext(navContext);
 
   useEffect(() => {
+    setCurrentProject(initialProjectState)
     getProjects()
       .then(res => {
         setProjects(res);
@@ -36,14 +38,16 @@ export default function Projects() {
         project.id === currentProject.id ? currentProject : project
       )
     );
-    setCurrentProject();
+    setCurrentProject(initialProjectState);
   };
+
+  console.log(currentProject);
 
   return (
     <div>
       <h1>Projects</h1>
       {projects &&
-        !currentProject &&
+        currentProject.name === "" &&
         projects.map(project => {
           return (
             <div key={project.id}>
@@ -56,10 +60,10 @@ export default function Projects() {
               <input type="checkbox" value={project.completed} />
               <button
                 onClick={() =>
-                  setCurrentProject(
-                    projects.filter(
-                      selectedProject => selectedProject.id === project.id
-                    )
+                  projects.forEach(
+                    selectedProject =>
+                      selectedProject.id === project.id &&
+                      setCurrentProject(selectedProject)
                   )
                 }
               >
@@ -69,7 +73,7 @@ export default function Projects() {
             </div>
           );
         })}
-      {currentProject && (
+      {currentProject.name !== "" && (
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -87,7 +91,7 @@ export default function Projects() {
           <button
             onClick={e => {
               e.preventDefault();
-              setCurrentProject();
+              setCurrentProject(initialProjectState);
             }}
           >
             Cancel
