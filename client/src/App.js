@@ -7,10 +7,24 @@ import "./App.css";
 export const navContext = createContext();
 
 export default function App() {
+  const initialProjectState = {
+    id: "",
+    name: "",
+    description: "",
+    completed: false
+  }
+  const initialActionState = {
+    id: "",
+    project_id: "",
+    notes: "",
+    description: "",
+    completed: false
+  }
+  
   const [projects, setProjects] = useState();
   const [actions, setActions] = useState()
-  const [currentAction, setCurrentAction] = useState();
-  const [currentProject, setCurrentProject] = useState();
+  const [currentAction, setCurrentAction] = useState(initialActionState);
+  const [currentProject, setCurrentProject] = useState(initialProjectState);
   return (
     <navContext.Provider value={{currentProject, currentAction, projects, actions, setCurrentProject, setCurrentAction, setProjects, setActions}}>
       <div className="App">
