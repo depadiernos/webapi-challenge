@@ -26,7 +26,7 @@ export default function App() {
   const [currentAction, setCurrentAction] = useState(initialActionState);
   const [currentProject, setCurrentProject] = useState(initialProjectState);
   return (
-    <navContext.Provider value={{currentProject, currentAction, projects, actions, setCurrentProject, setCurrentAction, setProjects, setActions}}>
+    <navContext.Provider value={{currentProject, currentAction, projects, actions, setCurrentProject, setCurrentAction, setProjects, setActions, initialActionState, initialProjectState}}>
       <div className="App">
         <nav>
           <NavLink to='/'></NavLink>
