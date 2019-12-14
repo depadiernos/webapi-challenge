@@ -51,7 +51,7 @@ router.put(
         description: req.body.description
       };
       const success = await db.update(req.params.id, project);
-      const newProject = success && (await db.getById(req.params.id));
+      const newProject = success && (await db.get(req.params.id));
       res.status(200).json(newProject);
     } catch (err) {
       next(err);
