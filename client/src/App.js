@@ -8,10 +8,11 @@ export const navContext = createContext();
 
 export default function App() {
   const [projects, setProjects] = useState();
+  const [actions, setActions] = useState()
   const [currentAction, setCurrentAction] = useState();
   const [currentProject, setCurrentProject] = useState();
   return (
-    <navContext.Provider value={{currentProject, currentAction, projects, setCurrentProject, setCurrentAction, setProjects}}>
+    <navContext.Provider value={{currentProject, currentAction, projects, actions, setCurrentProject, setCurrentAction, setProjects, setActions}}>
       <div className="App">
         <nav>
           <NavLink to='/'></NavLink>
