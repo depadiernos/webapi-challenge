@@ -10,6 +10,7 @@ export default function Projects() {
     currentProject,
     setCurrentProject
   } = useContext(navContext);
+
   useEffect(() => {
     getProjects()
       .then(res => {
@@ -17,6 +18,27 @@ export default function Projects() {
       })
       .catch(err => console.log(err));
   }, [setProjects]);
+
+  const handleChange = e => {
+    setCurrentProject({ ...currentProject, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async e => {
+    const data = {
+      name: currentProject.name,
+      description: currentProject.description,
+      completed: currentProject.completed
+    };
+    e.preventDefault();
+    await editProject(currentProject.id, data);
+    setProjects(projects =>
+      projects.map(project =>
+        project.id === currentProject.id ? currentProject : project
+      )
+    );
+    setCurrentProject();
+  };
+
   return (
     <div>
       <h1>Projects</h1>
@@ -47,6 +69,31 @@ export default function Projects() {
             </div>
           );
         })}
+      {currentProject && (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            value={currentProject.name}
+            onChange={handleChange}
+          />
+          <input
+            type="textarea"
+            name="description"
+            value={currentProject.description}
+            onChange={handleChange}
+          />
+          <button>Save</button>
+          <button
+            onClick={e => {
+              e.preventDefault();
+              setCurrentProject();
+            }}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
     </div>
   );
 }
