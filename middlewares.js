@@ -2,7 +2,7 @@ const projectDb = require("./data/helpers/projectModel");
 const actionDb = require("./data/helpers/actionModel");
 
 const logger = () => (req, res, next) => {
-  console.log(`[${new Date().toISOString()}]: ${req.method} - ${req.url}`);
+  console.log(`[${new Date().toISOString()}]: ${req.method} - ${req.url}: ${req.body}`);
   next();
 };
 
