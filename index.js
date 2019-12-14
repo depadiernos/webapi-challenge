@@ -12,3 +12,40 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const server = express();
+
+const { logger } = require("./middlewares");
+
+server.get("/", (req, res) => {
+  res.send(`<h2>This is a Projects NodeJS/Express REST API!</h2>`);
+});
+
+//custom middleware
+
+server.use(cors());
+server.use(helmet());
+server.use(express.json());
+server.use(logger());
+
+// code away!
+const projectsRouter = require("./projects/projects");
+const actionsRouter = require("./actions/actions");
+
+const port = process.env.PORT || 5000;
+const host = process.env.HOST || "0.0.0.0";
+
+server.listen(port, host, () => {
+  console.log(`Server running at http://${host}:${port}`);
+});
+
+server.use("/api/projects", projectsRouter);
+server.use("/api/projects/:id/actions", actionsRouter);
+
+server.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ message: "an internal error occurred." });
+});
